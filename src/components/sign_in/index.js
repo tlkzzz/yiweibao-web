@@ -18,7 +18,9 @@ import logoActiveImg from '../../images/logo-active.png';
 import Today from '../../components/common/today.js';
 
 //提交
-//
+
+
+
 
 class FormComponent extends React.Component {
     constructor(props) {
@@ -44,7 +46,7 @@ class FormComponent extends React.Component {
                      localStorage.setItem('LEVEL', 'SITE_LEVEL');//初始化站点信息
                      location.href = '/main/dashboard';
                    }else{
-                      message.error(data.msg);
+                      message.error(data.msg);    
                    } 
             });   
             } 
