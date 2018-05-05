@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>易维保V1.0</title>
+</head>
+<body>
+<script type="text/javascript">
+    var isMac = function () {
+        return (navigator.platform == 'Mac68K') || (navigator.platform == 'MacPPC') || (navigator.platform == 'Macintosh') || (navigator.platform == 'MacIntel');
+    };
+
+    if (!isMac()) {
+        var yzkScript = document.createElement('script');
+        yzkScript.src = 'https://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js';
+        yzkScript.async = true;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(yzkScript, s);
+    }
+    window.onload = function () {
+        if (isMac()) return;
+        $youziku.load("body", "30a5477ffbd44eae9bdf16453845b3c6", "PingFangSC");
+        $youziku.draw();
+    }
+</script>
+</body>
+</html>
