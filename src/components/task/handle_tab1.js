@@ -21,8 +21,8 @@ class AllHandleWorkOrderComponent extends React.Component {
             tableLoading: false,
             currentPage: 1,
         }
-        PubSub.subscribe(pubTopic.task.HANDLE_QUERY_KEYWORD, this.queryKeyword );
-        PubSub.subscribe(pubTopic.task.HANDILING_TASK.ALL, this.getPush );
+        // PubSub.subscribe(pubTopic.task.HANDLE_QUERY_KEYWORD, this.queryKeyword );
+        // PubSub.subscribe(pubTopic.task.HANDILING_TASK.ALL, this.getPush );
         //表格多选
         this.rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
@@ -248,7 +248,7 @@ class AllHandleWorkOrderComponent extends React.Component {
         const { state } = parentProps
         // this.param.word=parentProps.state.keyword;
         this.queryAction.myTaskHandleGetAllList(this.param );
-        this.getStatusData();
+       // this.getStatusData();
         state.currentTab="ALL";
     }
     queryKeyword = (msg,data) =>{
@@ -339,7 +339,7 @@ class HandleOneComponent extends React.Component {
 function mapStateToProps (state) {
     return {
         state: state.my_task,
-        commonState: state.common,
+       // commonState: state.common,
     }
 }
 
@@ -348,8 +348,8 @@ function mapStateToProps (state) {
 function buildActionDispatcher(dispatch) {
     return {
         actions: bindActionCreators(actions, dispatch),
-        commonActions:bindActionCreators(commonActions, dispatch),
-        repairactions:bindActionCreators(repairactions, dispatch),
+        // commonActions:bindActionCreators(commonActions, dispatch),
+        // repairactions:bindActionCreators(repairactions, dispatch),
     }
 }
 

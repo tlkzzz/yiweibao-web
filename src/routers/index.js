@@ -54,6 +54,7 @@ export default [
                             }, 'dashboard');
                         }
                     },
+                    
                     {
                         path: 'site_list',
                         onEnter,
@@ -63,6 +64,7 @@ export default [
                             }, 'site_list');
                         }
                     },
+                    
                     {
                         path: 'task/backlog_tab1',
                         onEnter,
@@ -913,8 +915,43 @@ export default [
                                     }, 'tab_4');
                                 }
                             },
+                             {
+                                path: 'dispatch_details',
+                                onEnter,
+                                getComponent(location, cb) {
+                                    require.ensure([], require => {
+                                        cb(null, require('../components/maintenance/dispatch_details.js').default);
+                                    }, 'dispatch_details');
+                                }
+                            },
                         ]
                     },
+                    //派工工单
+                        {
+                        path: 'dispatch',
+                        onEnter,
+                        getComponent(location, cb) {
+                            require.ensure([], require => {
+                                cb(null, require('../components/maintenance/dispatch.js').default);
+                            }, 'dispatch');
+                        },
+                        childRoutes: [
+                            {
+                                path: 'dispatch_details',
+                                onEnter,
+                                getComponent(location, cb) {
+                                    require.ensure([], require => {
+                                        cb(null, require('../components/maintenance/dispatch_details.js').default);
+                                    }, 'dispatch_details');
+                                }
+                            },
+                            
+                        ]
+                    },
+
+
+
+
                     {
                         path: 'job_plan',
                         onEnter,
@@ -1002,6 +1039,46 @@ export default [
                             require.ensure([], require => {
                                 cb(null, require('../components/after_sale/after_sale_treatment.js').default);
                             }, 'after_sale_treatment');
+                        },
+                    },
+                ]
+            },
+
+             // 工单处理
+            {
+                path: 'order',
+                getComponent(location, cb) {
+                    require.ensure([], require => {
+                        cb(null, require('../components/order/').default);
+                    }, 'order');
+                },
+                childRoutes: [
+                    {
+                        path: 'work_order',//
+                        onEnter,
+                        getComponent(location, cb) {
+                            require.ensure([], require => {
+                                cb(null, require('../components/order/work_order.js').default);
+                            }, 'work_order');
+                        },
+                       
+                    },
+                    {
+                        path: 'work_order_dfp',//待分配订单
+                        onEnter,
+                        getComponent(location, cb) {
+                            require.ensure([], require => {
+                                cb(null, require('../components/order/work_order_dfp.js').default);
+                            }, 'work_order_dfp');
+                        },
+                    },
+                     {
+                        path: 'work_order_dfp_details',//待分配订单详情
+                        onEnter,
+                        getComponent(location, cb) {
+                            require.ensure([], require => {
+                                cb(null, require('../components/order/work_order_dfp_details.js').default);
+                            }, 'work_order_dfp_details');
                         },
                     },
                 ]
@@ -1564,6 +1641,7 @@ export default [
                                 cb(null, require('../components/matter_repair/dispatch.js').default);
                             }, 'dispatch');
                         },
+
                         childRoutes: [
                             {
                                 path: 'dispatch_tab1',
@@ -1572,6 +1650,15 @@ export default [
                                     require.ensure([], require => {
                                         cb(null, require('../components/matter_repair/dispatch_tab1.js').default);
                                     }, 'dispatch_tab1');
+                                }
+                            },
+                             {
+                                path: 'dispatch_tab',
+                                onEnter,
+                                getComponent(location, cb) {
+                                    require.ensure([], require => {
+                                        cb(null, require('../components/matter_repair/dispatch_tab.js').default);
+                                    }, 'dispatch_tab');
                                 }
                             },
                             {

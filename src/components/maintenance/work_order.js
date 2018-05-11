@@ -61,13 +61,14 @@ class WorkOrderComponent extends React.Component {
         // 后端返回英文显示中文的对应数据
         this.workOrderCorrJson  = correspondenceJson.workOrder;
     }
-    jumpToDetail = (record, isAdd) => {
+    //详情
+    jumpToDetail = (record,isAdd) => {
 
         const { actions } = this.props;
-
+        console.log(record);
         if (isAdd) {
-            localStorage.removeItem('workOrder');
-            actions.workOrderCommitUpdateList('CLEAR_DATA'); //清除工单提报现有数据
+            // localStorage.removeItem('workOrder');
+            // actions.workOrderCommitUpdateList('CLEAR_DATA'); //清除工单提报现有数据
             browserHistory.push('/maintenance/');
             browserHistory.push('/maintenance/work_order/tab_1?add_work_order=1');
         } else {
@@ -152,12 +153,12 @@ class WorkOrderComponent extends React.Component {
     }
     // 列表项收藏点击
     collect = (checked, id) => {
-        const { actions } = this.props;
-        const param = {
-            checked,
-            id,
-        }
-        runActionsMethod(actions, 'workOrderCollect', param);
+        // const { actions } = this.props;
+        // const param = {
+        //     checked,
+        //     id,
+        // }
+        // runActionsMethod(actions, 'workOrderCollect', param);
     }
 
     workOrder_state=(e)=>{
@@ -234,17 +235,17 @@ class WorkOrderComponent extends React.Component {
             description: values.description,
         }
 
-        runActionsMethod(actions, 'statusChange', param, () => {
-            if (isDetailsPage) {
-                this.jumpToDetail(localStorageWorkOrder)
-            } else {
-                this.setState({ selectedRowKeys: [] });
-                this.listMoreOperations.cancel();
-                this.getList();
-            }
+        // runActionsMethod(actions, 'statusChange', param, () => {
+        //     if (isDetailsPage) {
+        //         this.jumpToDetail(localStorageWorkOrder)
+        //     } else {
+        //         this.setState({ selectedRowKeys: [] });
+        //         this.listMoreOperations.cancel();
+        //         this.getList();
+        //     }
 
-            this.statusChangeModal.modalHide();
-        });
+        //     this.statusChangeModal.modalHide();
+        // });
     }
     // 批量派工确认
     dispatchOrderConfirm = () => {
@@ -264,14 +265,14 @@ class WorkOrderComponent extends React.Component {
                     planStartDate,
                     planCompletionDate,
                 };
-                runActionsMethod(actions, 'dispatchOrder', param);
+                // runActionsMethod(actions, 'dispatchOrder', param);
             }
         });
     }
     // 保存工单
     orderSave = () => {
         const { actions, location } = this.props;
-        actions.getFormValues(false);
+        // actions.getFormValues(false);
 
         const pathname = location.pathname;
 
@@ -317,22 +318,22 @@ class WorkOrderComponent extends React.Component {
                     deleteAssetList,
                 }
 
-                runActionsMethod(actions, 'workOrderCommitSave', param, (json) => {
-                    const data = json.data;
-                    const obj = {};
-                    obj.id = data.id;
-                    obj.process = 1;
-                    obj.status = data.status;
-                    obj.workOrderNum = data.workOrderNum;
-                    obj.description = data.description;
+                // runActionsMethod(actions, 'workOrderCommitSave', param, (json) => {
+                //     const data = json.data;
+                //     const obj = {};
+                //     obj.id = data.id;
+                //     obj.process = 1;
+                //     obj.status = data.status;
+                //     obj.workOrderNum = data.workOrderNum;
+                //     obj.description = data.description;
 
-                    localStorage.setItem('workOrder', JSON.stringify(obj));
+                //     localStorage.setItem('workOrder', JSON.stringify(obj));
     
-                    setTimeout(() => {
-                        browserHistory.push('/maintenance/');
-                        browserHistory.push('/maintenance/work_order/tab_1');
-                    }, 500);
-                });
+                //     setTimeout(() => {
+                //         browserHistory.push('/maintenance/');
+                //         browserHistory.push('/maintenance/work_order/tab_1');
+                //     }, 500);
+                // });
             }
 
             else if (pathname.indexOf('tab_2') !== -1) {
@@ -363,12 +364,12 @@ class WorkOrderComponent extends React.Component {
                     deleteEamOrderstepVoList,
                 }
         
-                runActionsMethod(actions, 'taskAssignSave', param, () => {
-                    setTimeout(() => {
-                        browserHistory.push('/maintenance/');
-                        browserHistory.push('/maintenance/work_order/tab_2');
-                    }, 500);
-                });
+                // runActionsMethod(actions, 'taskAssignSave', param, () => {
+                //     setTimeout(() => {
+                //         browserHistory.push('/maintenance/');
+                //         browserHistory.push('/maintenance/work_order/tab_2');
+                //     }, 500);
+                // });
             }
 
             else if (pathname.indexOf('tab_3') !== -1) {
@@ -384,12 +385,12 @@ class WorkOrderComponent extends React.Component {
                     ...state.getFormValues,
                 }
 
-                runActionsMethod(actions, 'workOrderReportSave', param, () => {
-                    setTimeout(() => {
-                        browserHistory.push('/maintenance/');
-                        browserHistory.push('/maintenance/work_order/tab_3');
-                    }, 500);
-                });
+                // runActionsMethod(actions, 'workOrderReportSave', param, () => {
+                //     setTimeout(() => {
+                //         browserHistory.push('/maintenance/');
+                //         browserHistory.push('/maintenance/work_order/tab_3');
+                //     }, 500);
+                // });
             }
 
             else if (pathname.indexOf('tab_4') !== -1) {
@@ -402,12 +403,12 @@ class WorkOrderComponent extends React.Component {
                     ...state.getFormValues,
                 }
 
-                runActionsMethod(actions, 'workOrderCheckSave', param, () => {
-                    setTimeout(() => {
-                        browserHistory.push('/maintenance/');
-                        browserHistory.push('/maintenance/work_order/tab_4');
-                    }, 500);
-                });
+                // runActionsMethod(actions, 'workOrderCheckSave', param, () => {
+                //     setTimeout(() => {
+                //         browserHistory.push('/maintenance/');
+                //         browserHistory.push('/maintenance/work_order/tab_4');
+                //     }, 500);
+                // });
             }
 
             
@@ -460,7 +461,7 @@ class WorkOrderComponent extends React.Component {
                         this.setState({ sendProcessYTitle, sendProcessYName, sendProcessNTitle, sendProcessNName });
                         break;
                     case 'DHB':
-                        actions.getFormValues(false);
+                        // actions.getFormValues(false);
 
                         clearTimeout(this.timer);
                         this.timer = setTimeout(() => { // 异步获取表单值 因为actions.getFormValues为异步执行 同步取值取不到
@@ -477,7 +478,7 @@ class WorkOrderComponent extends React.Component {
                         }, 0);
                         break;
                     case 'SQGQ':
-                        actions.getFormValues(false);
+                        // actions.getFormValues(false);
                         clearTimeout(this.timer);
                         this.timer = setTimeout(() => { // 异步获取表单值 因为actions.getFormValues为异步执行 同步取值取不到
                             const { state } = this.props;
@@ -542,41 +543,41 @@ class WorkOrderComponent extends React.Component {
             param.description = ReactDOM.findDOMNode(this.sendProcessTextarea).value;
         }
 
-        runActionsMethod(actions, 'sendProcess', param, (json) => {
-            const { state } = this.props;
-            let dataName = '';
+        // runActionsMethod(actions, 'sendProcess', param, (json) => {
+        //     const { state } = this.props;
+        //     let dataName = '';
 
-            switch (curProcess) {
-                case '1':
-                    dataName = 'workOrderCommitListData';
-                    break;
-                case '2':
-                    dataName = 'taskListData';
-                    break;
-                case '3':
-                    dataName = 'workOrderReportListData';
-                    break;
-                case '4':
-                    dataName = 'workOrderCheckListData';
-                    break;
-            }
+        //     switch (curProcess) {
+        //         case '1':
+        //             dataName = 'workOrderCommitListData';
+        //             break;
+        //         case '2':
+        //             dataName = 'taskListData';
+        //             break;
+        //         case '3':
+        //             dataName = 'workOrderReportListData';
+        //             break;
+        //         case '4':
+        //             dataName = 'workOrderCheckListData';
+        //             break;
+        //     }
 
-            const data = state[dataName];
+        //     const data = state[dataName];
 
-            const obj = {};
-            obj.id = data.id; // 详情数据里取
-            obj.status = json.data; // 保存成功返回数据里取保存后最新值
-            obj.process = correspondenceJson.workOrder[obj.status].process; // 保存成功返回数据里取保存后最新值
-            obj.workOrderNum = this.localStorageWorkOrder.workOrderNum; // 本地存储取 因为有的返回数据没有编号和描述
-            obj.description = this.localStorageWorkOrder.description; // 本地存储取 因为有的返回数据没有编号和描述
+        //     const obj = {};
+        //     obj.id = data.id; // 详情数据里取
+        //     obj.status = json.data; // 保存成功返回数据里取保存后最新值
+        //     obj.process = correspondenceJson.workOrder[obj.status].process; // 保存成功返回数据里取保存后最新值
+        //     obj.workOrderNum = this.localStorageWorkOrder.workOrderNum; // 本地存储取 因为有的返回数据没有编号和描述
+        //     obj.description = this.localStorageWorkOrder.description; // 本地存储取 因为有的返回数据没有编号和描述
 
-            localStorage.setItem('workOrder', JSON.stringify(obj));
+        //     localStorage.setItem('workOrder', JSON.stringify(obj));
 
-            setTimeout(() => {
-                browserHistory.push(`/maintenance/`)
-                browserHistory.push(`/maintenance/work_order/tab_${obj.process}`)
-            }, 500);
-        });
+        //     setTimeout(() => {
+        //         browserHistory.push(`/maintenance/`)
+        //         browserHistory.push(`/maintenance/work_order/tab_${obj.process}`)
+        //     }, 500);
+        // });
     }
     // 数据是否加载完成 未完成不能点保存
     loadIsComplete = (curProcess, isAddWorkOrder) => {

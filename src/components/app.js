@@ -360,11 +360,11 @@ class App extends React.Component {
                                                 </SubMenu>
                                                 <SubMenu
                                                     onTitleClick={this.subMenuClick}
-                                                    key="maintenance"
-                                                    title={<div data-defaultLink="/maintenance/work_order" ><span data-defaultLink="/maintenance/work_order">报修管理</span></div>}
+                                                    key="order"
+                                                    title={<div data-defaultLink="/order/work_order" ><span data-defaultLink="/order/work_order">报修管理</span></div>}
                                                 >
-                                                    <Menu.Item key="work_order"> <Link to="/maintenance/work_order">维保工单</Link></Menu.Item>
-                                                    <Menu.Item key="dispatch"> <Link to="/matter_repair/dispatch">派工工单</Link></Menu.Item>
+                                                    <Menu.Item key="work_order"> <Link to="/order/work_order">维保工单</Link></Menu.Item>
+                                                    <Menu.Item key="dispatch"> <Link to="/order/work_order_dfp">派工工单</Link></Menu.Item>
                                                 </SubMenu>
                                                 <SubMenu
                                                     onTitleClick={this.subMenuClick}

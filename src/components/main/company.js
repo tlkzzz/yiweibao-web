@@ -45,15 +45,15 @@ class FormComponent extends React.Component {
               console.log(object);
               // tcLogo:this.state.upload_url
             let { actions } = this.props;
-          // actions.editCompany(object, (data) => {
-          //     this.setState({loading:false});
-          //       if(data.code==200){
-          //            message.success('修改成功');
-          //           // location.href = '/main/settings/company';
-          //       }else {
-          //             message.error(data.msg);
-          //       }
-          //   }); 
+          actions.editCompany(object, (data) => {
+              this.setState({loading:false});
+                if(data.code==200){
+                     message.success('修改成功');
+                    // location.href = '/main/settings/company';
+                }else {
+                      message.error(data.msg);
+                }
+            }); 
       }
     });
   }

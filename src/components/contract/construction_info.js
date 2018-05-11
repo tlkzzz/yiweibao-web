@@ -403,6 +403,7 @@ class FormComponent extends React.Component {
                         </Col>
                     </Row>
                 </Form>
+                
                 <SelectPerson
                     visible={this.state.selectPersonModalShow}
                     selectPersonModalHide={() => {

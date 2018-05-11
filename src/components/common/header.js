@@ -43,7 +43,7 @@ class HeaderComponent extends React.Component {
             },
             {
                 className: 'task',
-                linkTo: '/main/task/backlog_tab1',
+                linkTo: '/main/task/handle_tab1',
                 title: '任务',
             },
             {  

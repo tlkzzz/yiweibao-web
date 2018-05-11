@@ -2,6 +2,7 @@
  * selectPerson
  * 选择人员组件
 
+
  *
  * @props  multiple                 true为多选 false 单选
  * @props  visible                  弹窗显示/隐藏
@@ -17,7 +18,7 @@ import actions from '../../actions/common.js';
 
 import { Modal, Button, Row, Col, Table, Pagination, Tag, Icon } from 'antd';
 import SearchInp from './search_inp.js';
-
+const confirm = Modal.confirm;
 class SelectPerson extends React.Component {
     constructor (props) {
         super(props);
@@ -32,8 +33,8 @@ class SelectPerson extends React.Component {
         this.columns = [
             {
                 title: '人员',
-                dataIndex: 'name',
-                key: 'name',
+                dataIndex: 'tseName',
+                key: 'tseName',
                 sorter: true,
                 render: (text, record, key) => {
                     return (
@@ -42,23 +43,9 @@ class SelectPerson extends React.Component {
                 }
             },
             {
-                title: '职务',
-                dataIndex: 'department',
-                key: 'department',
-                sorter: true,
-                render: defaultRender
-            },
-            {
-                title: '班组',
-                dataIndex: 'workgroup',
-                key: 'workgroup',
-                sorter: true,
-                render: defaultRender
-            },
-            {
                 title: '电话',
-                dataIndex: 'mobile',
-                key: 'mobile',
+                dataIndex: 'tseMobile',
+                key: 'tseMobile',
                 sorter: true,
                 render: defaultRender
             },
@@ -70,15 +57,16 @@ class SelectPerson extends React.Component {
         this.param = {
             pageNum:1,
             pageSize:6,
-            orgIds: [state.orgId],
-            siteIds: [state.siteId],
+            // orgIds: [state.orgId],
+            // siteIds: [state.siteId],
             productIds: state.productArray,
         };
 
         this.state = {
             resultArr: [],
             currentPage: 1,
-            tableLoading: false
+            tableLoading: false,
+            list:[],
         }
 
         this.b = true; // 用于componentDidUpdate函数的开关属性
@@ -90,14 +78,27 @@ class SelectPerson extends React.Component {
 
         if (multiple) {
             let existed = resultArr.findIndex((item, i) => {
-                return item.personId === record.personId;
+                return item.tseId === record.tseId;
             });
 
             if (existed === -1) this.setState({ resultArr: [...resultArr, record] });
         } else {
             this.setState({ resultArr: [record] }, () => {
-                onOk(this.state.resultArr[0]);
-                selectPersonModalHide();
+                 confirm({
+                    title: `是否确认派工 ${this.state.resultArr[0].tseName}?`,
+                    okText: '确认',
+                    onOk: () => {
+                        onOk(this.state.resultArr[0]);
+                         selectPersonModalHide();
+                    }
+                });
+
+
+               
+
+
+
+
             });
         }
 
@@ -117,6 +118,18 @@ class SelectPerson extends React.Component {
         this.props.selectPersonModalHide();
         // this.clearSelected();
     }
+
+    flashConfirm=()=>{
+         const { actions } = this.props;
+        this.setState({ tableLoading: true });
+        actions.personGetList({pageNum:1,pageSize:6}, (json) => {
+            this.setState({ tableLoading: false,list:json.result});
+                console.log(json);
+
+
+
+        });
+    }
     componentDidUpdate () {
         const { visible, setSelected } = this.props;
         if (visible && setSelected && this.b) {
@@ -134,8 +147,12 @@ class SelectPerson extends React.Component {
     getList = () => {
         const { actions } = this.props;
         this.setState({ tableLoading: true });
-        actions.personGetList(this.param, () => {
-            this.setState({ tableLoading: false });
+        actions.personGetList(this.param, (json) => {
+            this.setState({ tableLoading: false,list:json.result});
+                console.log(json);
+
+
+
         });
     }
     componentWillMount () {
@@ -143,8 +160,9 @@ class SelectPerson extends React.Component {
     }
     render() {
         const { visible, selectPersonModalHide, state, multiple } = this.props;
-        const data = state.personListData;
-        const list = data ? data.list : [];
+        // const data = state.personListData;
+       const data = this.state.list 
+     //   const list = data ? data.list : [];
 
         return (
             <Modal
@@ -163,25 +181,25 @@ class SelectPerson extends React.Component {
                                     if (!text) return;
 
                                     if (/[\u4E00-\u9FA5]+/.test(text)) {
-                                        this.param.name_like = text;
-                                        this.param.loginName_like = '';
-                                        this.param.mobile_like = '';
+                                        this.param.tseName = text;
+                                        this.param.ifLogin = '';
+                                        this.param.tseMobile = '';
 
                                     }
                                     else if (/[A-Za-z]+/.test(text)) {
-                                        this.param.name_like = '';
-                                        this.param.loginName_like = text;
-                                        this.param.mobile_like = '';
+                                        this.param.tseName = '';
+                                        this.param.ifLogin = text;
+                                        this.param.tseMobile = '';
                                     }
                                     else if (/[0-9]+/.test(text)) {
-                                        this.param.name_like = '';
-                                        this.param.loginName_like = '';
-                                        this.param.mobile_like = text;
+                                        this.param.tseName = '';
+                                        this.param.ifLogin = '';
+                                        this.param.tseMobile = text;
                                     }
                                     else {
-                                        this.param.name_like = '';
-                                        this.param.loginName_like = '';
-                                        this.param.mobile_like = '';
+                                        this.param.tseName = '';
+                                        this.param.ifLogin = '';
+                                        this.param.tseMobile = '';
                                     }
 
                                     this.getList();
@@ -209,7 +227,7 @@ class SelectPerson extends React.Component {
                                 <div>
                                     {
                                         this.state.resultArr.map((item, i) => {
-                                            return <Tag style={{marginBottom: 3}} key={i} id={item.personId}>{item.name} <Icon type="close" onClick={() => { this.deselectPerson(item) }} /></Tag>
+                                            return <Tag style={{marginBottom: 3}} key={i} id={item.tseId}>{item.tseName} <Icon type="close" onClick={() => { this.deselectPerson(item) }} /></Tag>
                                         })
                                     }
                                 </div>
@@ -221,9 +239,9 @@ class SelectPerson extends React.Component {
                     <Col className="gutter-row" span={multiple ? 18 : 24}>
                         <Table
                             loading={this.state.tableLoading}
-                            rowKey="personId"
+                            rowKey="tseId"
                             pagination={false}
-                            dataSource={list}
+                            dataSource={data.rows}
                             columns={this.columns}
                             rowSelection={this.rowSelection}
                             bordered
@@ -241,6 +259,7 @@ class SelectPerson extends React.Component {
                         onChange={this.pageChange}
                         style={{padding: 0}}
                     />
+                     <Button type="primary" size="large" onClick={this.flashConfirm} >刷新</Button>
                     <Button type="primary" size="large" onClick={this.confirm} style={{visibility: multiple ? 'inherit' : 'hidden'}}>确定</Button>
                 </div>
             </Modal>

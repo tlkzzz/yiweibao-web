@@ -147,7 +147,7 @@ class AssetComponent extends React.Component {
             this.listMoreOperations.cancel();
             localStorage.removeItem("asset");
             localStorage.removeItem("param");
-            browserHistory.push('/equipment/');
+            // browserHistory.push('/equipment/');
             browserHistory.push(`/equipment/asset/tab_1?add_asset=1`);
         } else {
             let json = {};
@@ -545,7 +545,8 @@ class AssetComponent extends React.Component {
                 </div>
                 <div className="eam-content">
                     <div className="eam-content-inner">
-                        <div className="eam-side-left">
+                      { /** <div className="eam-side-left">
+
                             <AsideTree
                                 data={
                                     [
@@ -580,8 +581,8 @@ class AssetComponent extends React.Component {
                                     this.getList();
                                 }}
                             />
-                        </div>
-                        <div className="eam-main-right">
+                        </div>*/}
+                        <div className="eam-content">
                             <Table
                                 loading={this.state.tableLoading}
                                 rowKey="id"

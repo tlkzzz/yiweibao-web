@@ -172,7 +172,7 @@ class DispatchComponent extends React.Component {
          // this.listMoreOperations.cancel();
          //     localStorage.removeItem('dispatch');
          // browserHistory.push(`/matter_repair/dispatch/dispatch_tab`);
-          // location.href = '/matter_repair/dispatch/dispatch_tab';
+          browserHistory.push('/maintenance/work_order/dispatch_details');
           
     }
 

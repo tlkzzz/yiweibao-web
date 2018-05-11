@@ -20,10 +20,59 @@ let actions = {
              }
          });
      },
+
+    //查询公司下面所有站点 select选择器
+        getCompanyServicePoints: (param, cb) => (dispatch, getState) => {
+           _fetch({
+               url: '/servicePoints/getCompanyServicePoints',
+               data: param,
+               type: 'get',
+               success: json => {
+                   cb && cb(json);
+               }
+           });
+       },
+ //查询站点下面所有分类 select选择器
+        getCompanyAsset: (param, cb) => (dispatch, getState) => {
+           _fetch({
+               url: '/asset/getCompanyAsset',
+               data: param,
+               type: 'get',
+               success: json => {
+                   cb && cb(json);
+               }
+           });
+       },
+
+
      //获取设备列表
      statusList: (param, cb) => (dispatch, getState) => {
          _fetch({
              url: '/asset/getAsset',
+             data: param,
+             type: 'get',
+             success: json => {
+                 // dispatch(actions.actionCreator("STATUS_LIST", json.data));
+                 cb && cb(json);
+             }
+         });
+     },
+      //新增设备
+     saveAsset: (param, cb) => (dispatch, getState) => {
+         _fetch({
+             url: '/asset/saveAsset',
+             data: param,
+             type: 'get',
+             success: json => {
+                 // dispatch(actions.actionCreator("STATUS_LIST", json.data));
+                 cb && cb(json);
+             }
+         });
+     },
+     //新增设备分类
+      saveAssetType: (param, cb) => (dispatch, getState) => {
+         _fetch({
+             url: '/asset/saveAssetType',
              data: param,
              type: 'get',
              success: json => {

@@ -99,13 +99,19 @@ class HandleComponent extends React.Component {
     getMyTaskLogo=()=>{
 
         const { state,actions,commonState} = this.props;
-        let param={
-            siteId:commonState.siteId
-        }
-        actions.myTaskFindLogoDone(param)
+        // let param={
+        //     siteId:commonState.siteId
+        // }
+        actions.repairStatistics({},(json)=>{
+            console.log(json)
+
+
+        })
     }
 
     componentWillMount() {
+
+
         this.getMyTaskLogo();
     }
 
@@ -120,7 +126,7 @@ class HandleComponent extends React.Component {
             <div>
                 <div className="top-bar clearfix">
                     <div className="details-title pull-left">
-                        <h3>经办任务</h3>
+                        <h3>报修统计</h3>
                         <div className="fuzzy-query"><SearchInp onEnter={(text) => {
                             this.fuzzyQuery(text)
                         }}/></div>
@@ -155,8 +161,8 @@ class HandleComponent extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        state: state.my_task,
-        commonState: state.common,
+        state: state.main,
+        // commonState: state.common,
     }
 }
 
@@ -165,7 +171,7 @@ function mapStateToProps (state) {
 function buildActionDispatcher(dispatch) {
     return {
         actions: bindActionCreators(actions, dispatch),
-        commonActions:bindActionCreators(commonActions, dispatch),
+        // commonActions:bindActionCreators(commonActions, dispatch),
     }
 }
 

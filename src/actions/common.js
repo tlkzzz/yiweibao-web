@@ -107,15 +107,16 @@ let actions = {
             }
         });
     },
+
     // 选择人员
     personGetList: (param, cb) => (dispatch, getState) => {
         _fetch({
-            url: '/uas/open/personandusers/findPage',
+            url: '/employee/workList',
             data: param,
-            type: 'post',
+            type: 'get',
             success: json => {
-                dispatch(actions.actionCreator('PERSON_GET_LIST', json.data));
-                cb && cb();
+                // dispatch(actions.actionCreator('PERSON_GET_LIST', json.data));
+                cb && cb(json);
             }
         });
     },

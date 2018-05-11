@@ -10,6 +10,7 @@ let actions = {
         payload: state
     }),
 
+
     //-----------------------------------settings--------------------------//
     //获取表单值
     getFormValues: (state) => (dispatch, getState) => {
@@ -425,6 +426,30 @@ let actions = {
            });
        },
     //-----------------------------------mytask--------------------------//
+    //报修全部统计
+     repairStatistics: (param, cb) => (dispatch, getState) => {
+        _fetch({
+            url: '/statistics/repairStatistics',
+            data: param,
+            type: 'get',
+            success: json => {
+                // dispatch(actions.actionCreator("BACKLOG_ALL_GET_LIST", json.data));
+                cb && cb(json);
+            }
+        });
+    },
+      //报修统计状态查询
+  repairStatisticsList: (param, cb) => (dispatch, getState) => {
+        _fetch({
+            url: '/statistics/repairStatisticsList',
+            data: param,
+            type: 'get',
+            success: json => {
+                // dispatch(actions.actionCreator("BACKLOG_ALL_GET_LIST", json.data));
+                cb && cb(json);
+            }
+        });
+    },
     //待办的全部
     myTaskBacklogGetAllList: (param, cb) => (dispatch, getState) => {
         _fetch({

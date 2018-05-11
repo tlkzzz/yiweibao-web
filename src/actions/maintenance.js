@@ -49,6 +49,41 @@ let actions = {
             }
         });
     },
+     // 查询待分派 详情
+    getAssigned: (param, cb) => (dispatch, getState) => {
+        _fetch({
+            url: '/serviceOrder/getAssigned',
+            data: param,
+            type: 'get',
+            success: json => {
+               // dispatch(actions.actionCreator('WORK_ORDER_GET_LIST', json.data));
+                cb && cb(json);
+            }
+        });
+    },
+     // 派工
+    dispatch: (param, cb) => (dispatch, getState) => {
+        _fetch({
+            url: '/serviceOrder/dispatch',
+            data: param,
+            type: 'get',
+            success: json => {
+               // dispatch(actions.actionCreator('WORK_ORDER_GET_LIST', json.data));
+                cb && cb(json);
+            }
+        });
+    },
+    //dispatchList 查询工单记录信息
+          dispatchList: (param, cb) => (dispatch, getState) => {
+                _fetch({
+                    url: '/serviceOrder/dispatchList',
+                    data: param,
+                    type: 'get',
+                    success: json => {
+                        cb && cb(json);
+                    }
+                });
+            },
     workOrderDel: (param, cb) => (dispatch, getState) => {
         _fetch({
             url: '/workorder/deleteWorkOrderList',

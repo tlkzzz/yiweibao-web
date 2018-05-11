@@ -61,7 +61,7 @@ class HandleComponent extends React.Component {
 
 
 
-        console.info(data);
+        // console.info(data);
 
         const { state} = this.props;
         const buttonStatus=state.getAllStatus;
@@ -99,10 +99,19 @@ class HandleComponent extends React.Component {
     getMyTaskLogo=()=>{
 
         const { state,actions,commonState} = this.props;
-        let param={
-            siteId:commonState.siteId
-        }
-        actions.myTaskFindLogoDone(param)
+        // let param={
+        //     siteId:commonState.siteId
+        // }
+        actions.repairStatistics({},(json)=>{
+
+            console.log(json);
+
+
+
+        })
+
+
+
     }
 
     componentWillMount() {
@@ -112,7 +121,7 @@ class HandleComponent extends React.Component {
     render() {
 
         const {children, state} = this.props;
-        const buttonStatus=state.getAllStatus;
+        // const buttonStatus=state.getAllStatus;
         const myTaskLogo=state.myTaskLogo
             // getAllStatus:true,//获取全部按钮，true:获取非关闭，false：全部
         // console.log("---handle-----render-----", this.props);
@@ -120,7 +129,7 @@ class HandleComponent extends React.Component {
             <div>
                 <div className="top-bar clearfix">
                     <div className="details-title pull-left">
-                        <h3>经办任务</h3>
+                        <h3>报修工单</h3>
                         <div className="fuzzy-query"><SearchInp onEnter={(text) => {
                             this.fuzzyQuery(text)
                         }}/></div>
@@ -129,21 +138,21 @@ class HandleComponent extends React.Component {
                     <div className="eam-tab-nav">
                         <Link activeClassName="active" to="/task/handle/handle_tab1">全部</Link>
                         <Badge count={myTaskLogo?myTaskLogo.repairOrder:0} overflowCount={100}>
-                            <Link activeClassName="active" to="/task/handle/handle_tab2">报修工单</Link>
+                            <Link activeClassName="active" to="/task/handle/handle_tab2"></Link>
                         </Badge>
                         <Badge count={myTaskLogo?myTaskLogo.workOrder:0} overflowCount={100}>
-                            <Link activeClassName="active" to="/task/handle/handle_tab3">维保工单</Link>
+                            <Link activeClassName="active" to="/task/handle/handle_tab3">今日报修</Link>
                         </Badge>
                         <Badge count={myTaskLogo?myTaskLogo.dispatchOrder:0} overflowCount={100}>
-                            <Link activeClassName="active" to="/task/handle/handle_tab4">派工工单</Link>
+                            <Link activeClassName="active" to="/task/handle/handle_tab4">待派工</Link>
                         </Badge>
                         <Badge count={myTaskLogo?myTaskLogo.patrolOrder:0} overflowCount={100}>
-                            <Link activeClassName="active" to="/task/handle/handle_tab5">巡检工单</Link>
+                            <Link activeClassName="active" to="/task/handle/handle_tab5">已完成</Link>
                         </Badge>
                         <Badge count={myTaskLogo?myTaskLogo.headquartersDaliyTask:0} overflowCount={100}>
-                            <Link activeClassName="active" to="/task/handle/handle_tab6">例行工作单</Link>
+                            <Link activeClassName="active" to="/task/handle/handle_tab6">未完成</Link>
                         </Badge>
-                        <Button type="primary" className="pull-right" onClick={this.getAll}> {buttonStatus?"显示全部":"取现显示全部"} </Button>
+                       /** <Button type="primary" className="pull-right" onClick={this.getAll}> {buttonStatus?"显示全部":"取现显示全部"} </Button>**/
                     </div>
                 </div>
                 {children}
@@ -156,7 +165,7 @@ class HandleComponent extends React.Component {
 function mapStateToProps (state) {
     return {
         state: state.my_task,
-        commonState: state.common,
+        // commonState: state.common,
     }
 }
 
@@ -165,7 +174,7 @@ function mapStateToProps (state) {
 function buildActionDispatcher(dispatch) {
     return {
         actions: bindActionCreators(actions, dispatch),
-        commonActions:bindActionCreators(commonActions, dispatch),
+        // commonActions:bindActionCreators(commonActions, dispatch),
     }
 }
 

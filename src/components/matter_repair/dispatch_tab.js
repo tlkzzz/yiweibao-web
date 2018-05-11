@@ -434,155 +434,21 @@ class FormComponent extends React.Component {
     }
 }
 
-const NewFormComponent = Form.create({onValuesChange: (props, values) => {
-    for (let attr in values) {
-        if (values[attr] instanceof moment) {
-            values[attr] = moment(values[attr]).format('YYYY-MM-DD HH:mm:ss');
-        }
-    }
-    //标记表单数据已更新
-    localStorage.setItem('dispatchWorkOrder_edit_flag', true);
-    let tmp = Object.assign({}, JSON.parse(localStorage.getItem('dispatchWorkOrder_edit')), values);
-    localStorage.setItem('dispatchWorkOrder_edit', JSON.stringify(tmp));
 
-}})(FormComponent)
-
-class WorkOrderOneComponent extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            modalShow: false,
-            currentPage: 1,
-        }
-
-        this.customPanelStyle = {
-            background: '#fff',
-            borderRadius: 2,
-            marginBottom: 24,
-            border: 0,
-            boxShadow: '0 1px 6px rgba(0, 0, 0, 0.2)'
-        };
-
-        this.props.router.setRouteLeaveHook(
-            this.props.route,
-            this.routerWillLeave.bind(this)
-        );
-        this.onBeforeUnload = (event) => {
-            const isEdited = JSON.parse(localStorage.getItem('dispatchWorkOrder_edit_flag'));
-            if (isEdited) {
-                let confirmationMessage = '当前页面已修改，是否确认离开？';
-                (event || window.event).returnValue = confirmationMessage; // Gecko and Trident
-                return confirmationMessage; // Gecko and WebKit
-            }
-            return "\o/";
-        };
-        //注册刷新事件，当页面刷新时，缓存页面数据
-        window.addEventListener('beforeunload', this.onBeforeUnload);
-    }
-    routerWillLeave(nextLocation)   {
-        const { location } = this.props;
-        if (!nextLocation.pathname.startsWith(location.pathname.substring(0, location.pathname.length - 1))) {
-            //切换其它页面
-            const isEdited = JSON.parse(localStorage.getItem('dispatchWorkOrder_edit_flag'));
-            if (isEdited) {
-                const confirm = Modal.confirm;
-                confirm({
-                    title: '提示',
-                    content: '当前页面已修改，是否确认离开？',
-                    onOk() {
-                        localStorage.removeItem('dispatchWorkOrder');
-                        localStorage.removeItem('dispatchWorkOrder_edit');
-                        localStorage.removeItem('dispatchWorkOrder_edit_flag');
-                        localStorage.removeItem('workOrderIdSign');
-                        localStorage.removeItem('workOrderId');
-                        browserHistory.push(nextLocation.pathname);
-                    }
-                });
-                return false;
-            } else {
-                localStorage.removeItem('dispatchWorkOrder');
-                localStorage.removeItem('dispatchWorkOrder_edit');
-                localStorage.removeItem('dispatchWorkOrder_edit_flag');
-                localStorage.removeItem('workOrderIdSign');
-                localStorage.removeItem('workOrderId');
-            }
-        }
-    }
-    render() {
-        const { state, actions,commonState } = this.props;
-        const data=commonState.processExecutionRecord;
-        const recordList = data.executionRecord || [];
-        // 执行记录日期
-        const recordDateArr = data.dateArr;
-
-        return (
-            <div className="eam-tab-page">
-                <div className="eam-content">
-                    <Collapse bordered={false} defaultActiveKey={['1', '2', '3']}>
-                        <Panel header={<span className="label">工单信息 <Icon type="caret-down" /></span>} key="1" style={this.customPanelStyle}>
-                            <NewFormComponent wrappedComponentRef={taskStepsAddForm => this.taskStepsAddForm = taskStepsAddForm} props={this.props}/>
-                        </Panel>
-                        <Panel header={<span className="label">执行记录 <Icon type="caret-down" /></span>} key="3" style={this.customPanelStyle}>
-                            <Timeline>
-                                {
-                                    recordList.map((item, i) => {
-
-                                        let time = item.endTime ? item.endTime.split(' ')[1] : '';
-
-                                        let iconType;
-                                        if (i === 0) {
-                                            iconType = item.endTime ? 'minus-circle-o': 'clock-circle-o';
-                                        } else {
-                                            iconType = item.processType === 'reject' ? 'exclamation-circle-o' : 'check-circle-o';
-                                        }
-
-                                        return (
-                                            <Timeline.Item
-                                                key={i}
-                                                dot={
-                                                    <div>
-                                                        <div className={recordDateArr[i] ? 'date' : ''}>{recordDateArr[i] ? recordDateArr[i] : ''} {recordDateArr[i] ? <i></i> : ''}</div>
-                                                        <div>
-                                                            <Icon className={item.processType === 'reject' ? 'red pull-right' : 'pull-right'} type={iconType} style={{ fontSize: '16px' }} />
-                                                            <span className="pull-right time">{time.slice(0,5)}</span>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            >
-                                                <h2>
-                                                    <span className={item.processType === 'reject' ? 'red name' : 'name'}>{item.name}</span>
-                                                    <span>持续时间：{item.durationInMillis ? `${msFormat(item.durationInMillis, 'h')}小时${msFormat(item.durationInMillis, 'm')}分钟` : '-'}</span>
-                                                    &nbsp;&nbsp;
-                                                    <span>责任人：{item.personName}</span>
-                                                </h2>
-                                                <p>{item.description}</p>
-                                            </Timeline.Item>
-                                        )
-                                    })
-                                }
-                            </Timeline>
-                        </Panel>
-                    </Collapse>
-                </div>
-            </div>
-        )
-    }
-}
 
 
 function mapStateToProps(state) {
     return {
         state: state.matter_repair,
-        commonState: state.common
+        // commonState: state.common
     }
 }
 
 function buildActionDispatcher(dispatch) {
     return {
         actions: bindActionCreators(actions, dispatch),
-        commonActions: bindActionCreators(commonActions, dispatch),
+        // commonActions: bindActionCreators(commonActions, dispatch),
     }
 }
 
-export default connect(mapStateToProps, buildActionDispatcher)(WorkOrderOneComponent);
+export default connect(mapStateToProps, buildActionDispatcher)(FormComponent);

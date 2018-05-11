@@ -98,6 +98,8 @@ const confirm = Modal.confirm;
              orgId: commonState.orgId,
          }
 
+
+
      }
      jumpToTabPage = (record ,isAdd) => {
          if (isAdd) {
@@ -398,6 +400,7 @@ const confirm = Modal.confirm;
                  </div>
                  <div className="eam-content">
                      <div className="eam-content-inner">
+                 {/**
                          <div className="eam-side-left">
                              <AsideTree
                                  data={
@@ -421,8 +424,8 @@ const confirm = Modal.confirm;
 
                                  }}
                              />
-                         </div>
-                         <div className="eam-main-right">
+                         </div>*/}
+                         <div className="eam-content">
                              <Table
                                  loading={this.state.tableLoading}
                                  rowKey="id"

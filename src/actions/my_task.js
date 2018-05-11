@@ -64,6 +64,21 @@ let actions = {
         });
     },
     //------------------------报修工单-------------------------------
+    //所有报修工单
+       repairStatistics: (param, cb) => (dispatch, getState) => {
+        _fetch({
+            url: '/statistics/repairStatistics',
+            data: param,
+            type: 'get',
+            success: json => {
+              //  dispatch(actions.actionCreator("BACKLOG_REPAIR_GET_LIST", json.data));
+                cb && cb(json);
+            }
+        });
+    },
+
+
+
     //待办的报修工单
     myTaskBacklogGetRepairList: (param, cb) => (dispatch, getState) => {
         _fetch({
